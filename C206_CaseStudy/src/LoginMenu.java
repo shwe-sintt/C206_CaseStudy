@@ -109,7 +109,7 @@ public class LoginMenu {
 
 			switch (choice) {
 			case 1:
-				// addStudent();
+				//addStudent();
 				break;
 			case 2:
 				// updateStudent();
