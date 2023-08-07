@@ -13,6 +13,8 @@ public class C206_CaseStudy {
 		// TODO Auto-generated method stub
 
 			ArrayList<Student> studentList = new ArrayList<Student>();
+			ArrayList<Admin> adminList = new ArrayList<Admin>();
+			ArrayList<Teacher> teacherList = new ArrayList<Teacher>();
 
 			studentList.add(new Student("Rachelle Lim", "22123456", "Floorball"));
 
@@ -162,5 +164,7 @@ public class C206_CaseStudy {
 
 			return studentFound;
 		}
+
+
 
 	}
