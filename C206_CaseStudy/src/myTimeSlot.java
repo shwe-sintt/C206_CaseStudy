@@ -65,7 +65,7 @@ public class myTimeSlot {
         Helper.line(30, "-");
     }
 
-    // Option 1 View
+    // Option 1: View
     public static void viewAllTimeSlots(ArrayList<TimeSlot> timeSlotList) {
         System.out.printf("%-10s %-10s %-10s %-20s\n", "Slot ID", "Day", "Time", "Date");
 
@@ -75,7 +75,7 @@ public class myTimeSlot {
         }
     }
 
-    // Option 2 Add
+    // Option 2: Add
     public static void addTimeSlot(ArrayList<TimeSlot> slots) {
         String newSlotId = Helper.readString("Enter slot ID (TS----) > ");
         String newDay = Helper.readString("Enter day > ");
@@ -89,7 +89,7 @@ public class myTimeSlot {
     }
 
 
-    // Option 3 Remove
+    // Option 3: Remove
     public static boolean removeTimeSlot(ArrayList<TimeSlot> timeSlotList) {
         String removeSlotId = Helper.readString("Enter slot ID to remove (TS---) > ");
 
@@ -110,7 +110,7 @@ public class myTimeSlot {
         return timeSlotFound;
     }
 
-    // Option 4 Update
+    // Option 4: Update
     public static boolean updateTimeSlot(ArrayList<TimeSlot> timeSlotList) {
         String updateSlotId = Helper.readString("Enter slot ID to update > ");
 
