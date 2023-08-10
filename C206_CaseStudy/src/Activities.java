@@ -1,0 +1,49 @@
+
+
+public class Activities {
+	
+		private String id;
+		private String name;
+		private String description;
+		private String criteria;
+
+		public Activities(String id,String name, String description, String criteria) {
+			this.id = id;
+			this.name = name;
+			this.description = description;
+			this.criteria = criteria;
+		}
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
+
+		public String getCriteria() {
+			return criteria;
+		}
+
+		public void setCriteria(String criteria) {
+			this.criteria = criteria;
+		}
+	
+}
