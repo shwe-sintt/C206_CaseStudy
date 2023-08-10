@@ -9,9 +9,9 @@ public class C206_CaseStudy {
 
 		ArrayList<User> userList = new ArrayList<User>();
 		
-	    userList.add(new User("admin", "admin", "admin", "Admin", "Admin"));
-	    userList.add(new User("teacher", "teacher", "teacher1", "Teacher", "Teacher"));
-	    userList.add(new User("student", "student", "student1", "Student", "Student"));
+	    userList.add(new User("admin", "admin", "admin", "Admin", "Admin","",""));
+	    userList.add(new User("teacher", "teacher", "teacher1", "Teacher", "Teacher","",""));
+	    userList.add(new User("student", "student", "student1", "Student", "Student","floorball",""));
 
 	    Scanner scanner = new Scanner(System.in);
 
@@ -83,7 +83,7 @@ public class C206_CaseStudy {
         for (User user : userList) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password) && user.getRole().equalsIgnoreCase("teacher")) {
                 System.out.println("\nWelcome, Teacher!\n");
-                teacherMenu();
+                teacherMenu(userList);
                 return;
             }
         }
@@ -154,8 +154,8 @@ public class C206_CaseStudy {
 
 		ArrayList<User> userList = new ArrayList<User>();
 		
-	    userList.add(new User("22123456", "Amelia Row", "Amelia", " ", "Student", "Hockey"));
-	    userList.add(new User("22654321", "Rachelle Lim", "Rachelle", " ", "Student", "Floorball"));
+	    userList.add(new User("22123456", "Amelia Row", "Amelia", " ", "Student", "Hockey",""));
+	    userList.add(new User("22654321", "Rachelle Lim", "Rachelle", " ", "Student", "Floorball",""));
 	    
         int choice = 0;
         while (choice != 5) {
@@ -191,16 +191,17 @@ public class C206_CaseStudy {
         }
     }
 
-    private static void teacherMenu() {
+    private static void teacherMenu(ArrayList<User> userList) {
         Scanner scanner = new Scanner(System.in);
 
         int choice = 0;
-        while (choice != 4) {
+        while (choice != 5) {
             System.out.println("** Teacher Menu **\n");
             System.out.println("1. Manage Activity");
             System.out.println("2. Manage Registration");
             System.out.println("3. Manage Approval Status");
-            System.out.println("4. Log out");
+            System.out.println("4. Manage Attendance");
+            System.out.println("5. Log out");
 
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
@@ -216,13 +217,17 @@ public class C206_CaseStudy {
                     manageApprovalStatusMenu();
                     break;
                 case 4:
-                    System.out.println("Logging out...");
+                    manageAttendanceMenu(userList);
+                    break;
+                case 5:
+                    System.out.println("Logging out...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
     }
+
 
     private static void manageActivityMenu() {
         Scanner scanner = new Scanner(System.in);
@@ -322,6 +327,108 @@ public class C206_CaseStudy {
         }
     }
 
+    private static void manageAttendanceMenu(ArrayList<User> userList) {
+        Scanner scanner = new Scanner(System.in);
+
+        int choice = 0;
+        while (choice != 4) {
+            System.out.println("\n** Manage Attendance **\n");
+            System.out.println("1. View Attendance");
+            System.out.println("2. Add Attendance");
+            System.out.println("3. Delete Attendance");
+            System.out.println("4. Back");
+
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    viewAttendance(userList);
+                    break;
+                case 2:
+                    addAttendance(userList);
+                    break;
+                case 3:
+                    deleteAttendance(userList);
+                    break;
+                case 4:
+                    System.out.println("Going back to the main menu...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void viewAttendance(ArrayList<User> userList) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter activity code: ");
+        String activityCode = scanner.nextLine();
+
+        boolean foundAttendance = false;
+
+        for (User user : userList) {
+            if ("student".equalsIgnoreCase(user.getRole()) && activityCode.equals(user.getActivityChosen()) && !user.getAttendanceStatus().isEmpty()) {
+                System.out.println("\n** View Attendance **");
+                System.out.println("Attendance Records:");
+                System.out.println("+----+-----------------+-----------+----------------+");
+                System.out.printf("| %-2s | %-15s | %-10s | %-14s |%n", "ID", "Name", "Username", "Attendance");
+                System.out.println("+----+-----------------+-----------+----------------+");
+                System.out.printf("| %-2s | %-15s | %-10s | %-14s |%n", user.getId(), user.getName(), user.getUsername(), user.getAttendanceStatus());
+                System.out.println("+----+-----------------+-----------+----------------+");
+                foundAttendance = true;
+            }
+        }
+
+        if (!foundAttendance) {
+            System.out.println("No attendance records found.");
+        }
+    }
+
+    private static void addAttendance(ArrayList<User> userList) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter activity code: ");
+        String activityCode = scanner.nextLine();
+
+        System.out.print("Enter student name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter attendance status (Present/Absent): ");
+        String attendanceStatus = scanner.nextLine();
+
+        for (User user : userList) {
+            if ("student".equalsIgnoreCase(user.getRole()) && user.getActivityChosen().equals(activityCode) && user.getName().equalsIgnoreCase(name)) {
+                user.setAttendanceStatus(attendanceStatus);
+                System.out.println("\nAttendance added for " + name + ": " + attendanceStatus);
+                return;
+            }
+        }
+
+        System.out.println("\nStudent not found or not associated with the specified activity.");
+    }
+
+    private static void deleteAttendance(ArrayList<User> userList) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter activity code: ");
+        String activityCode = scanner.nextLine();
+
+        System.out.print("Enter student name to delete attendance: ");
+        String name = scanner.nextLine();
+
+        for (User user : userList) {
+            if ("student".equalsIgnoreCase(user.getRole()) && user.getActivityChosen().equals(activityCode) && user.getName().equalsIgnoreCase(name)) {
+                user.setAttendanceStatus("");
+                System.out.println("Attendance record for " + name + " deleted.");
+                return;
+            }
+        }
+
+        System.out.println("Attendance record for " + name + " not found or not associated with the specified activity.");
+    }
+
 	
 	private static void studentMenu() {
 		Scanner scanner = new Scanner(System.in);
@@ -381,9 +488,11 @@ public class C206_CaseStudy {
 		String newUseruName = "";
 		String newUserPass = "";
 		String newUserRole = "Student";
+		String newAttendance = "";
+		
 
 
-		User stu = new User(newUserId, newUserName, newUseruName, newUserPass, newUserRole, newUserChosenAct);
+		User stu = new User(newUserId, newUserName, newUseruName, newUserPass, newUserRole, newUserChosenAct, newAttendance);
 		return stu;
 		
 	}
