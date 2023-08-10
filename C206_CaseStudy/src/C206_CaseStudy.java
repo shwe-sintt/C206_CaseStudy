@@ -118,7 +118,7 @@ public class C206_CaseStudy {
 		Scanner scanner = new Scanner(System.in);
 
 		int choice = 0;
-		while (choice != 7) {
+		while (choice != 5) {
 			System.out.println("** Admin Menu **\n");
 			System.out.println("1. Add a new student");
 			System.out.println("2. Update a student's information");
@@ -306,6 +306,7 @@ public class C206_CaseStudy {
 				break;
 			case 4:
 				System.out.println("Logging out...");
+				break;
 			}
 			
 		}
