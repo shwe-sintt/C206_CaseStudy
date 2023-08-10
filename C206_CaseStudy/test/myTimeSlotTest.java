@@ -29,6 +29,7 @@ public class myTimeSlotTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
+    
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         // Code to be executed before running any tests in this class (if needed)
@@ -41,7 +42,7 @@ public class myTimeSlotTest {
 
     @Before
     public void setUp() throws Exception {
-        TimeSlot = new TimeSlot("TS001", "Monday", "9:00 AM - 10:00 AM", "2023-08-15");
+        myTimeSlot = new myTimeSlot();
         // Code to set up test environment before each test case
     }
 
@@ -51,41 +52,52 @@ public class myTimeSlotTest {
     }
 
     @Test
-    public void testGetId() {
-        assertEquals("TS001", timeSlot.getId());
+    public void testAddTimeSlot_Normal() {
+        myTimeSlot.addTimeSlot("Monday, 9:00 AM - 10:00 AM");
+        myTimeSlot.addTimeSlot("Tuesday, 2:00 PM - 3:00 PM");
+
+        assertEquals(2, myTimeSlot.getId().size());
+        assertEquals("Monday, 9:00 AM - 10:00 AM", myTimeSlot.getId().get(0));
+        assertEquals("Tuesday, 2:00 PM - 3:00 PM", myTimeSlot.getIdS().get(1));
     }
 
     @Test
-    public void testGetDay() {
-        assertEquals("Monday", timeSlot.getDay());
+    public void testViewAllTimeSlots_Empty() {
+        String output = captureSystemOut(() -> myTimeSlot.viewAllTimeSlots());
+        assertTrue(output.contains("No time slots available."));
     }
 
     @Test
-    public void testSetDay() {
-        timeSlot.setDay("Tuesday");
-        assertEquals("Tuesday", timeSlot.getDay());
+    public void testDeleteTimeSlot_Normal() {
+        myTimeSlot.addTimeSlot("Monday, 9:00 AM - 10:00 AM");
+        myTimeSlot.addTimeSlot("Tuesday, 2:00 PM - 3:00 PM");
+
+        myTimeSlot.deleteTimeSlot(1);
+        assertEquals(1, myTimeSlot.getTimeSlots().size());
+        assertEquals("Tuesday, 2:00 PM - 3:00 PM", myTimeSlot.getTimeSlots().get(0));
     }
 
-    @Test
-    public void testGetTime() {
-        assertEquals("9:00 AM - 10:00 AM", timeSlot.getTime());
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testDeleteTimeSlot_InvalidIndex() {
+        myTimeSlot.addTimeSlot("Monday, 9:00 AM - 10:00 AM");
+        myTimeSlot.deleteTimeSlot(2);
     }
 
-    @Test
-    public void testSetTime() {
-        timeSlot.setTime("11:00 AM - 12:00 PM");
-        assertEquals("11:00 AM - 12:00 PM", timeSlot.getTime());
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testDeleteTimeSlot_EmptyList() {
+        myTimeSlot.deleteTimeSlot(1);
     }
 
-    @Test
-    public void testGetDate() {
-        assertEquals("2023-08-15", timeSlot.getDate());
-    }
+    // Helper method to capture System.out
+    private String captureSystemOut(Runnable action) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
 
-    @Test
-    public void testSetDate() {
-        timeSlot.setDate("2023-08-16");
-        assertEquals("2023-08-16", timeSlot.getDate());
+        action.run();
+
+        System.setOut(originalOut);
+        return outputStream.toString();
     }
 
     // Additional test cases can be added here

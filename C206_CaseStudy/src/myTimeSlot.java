@@ -75,18 +75,19 @@ public class myTimeSlot {
         }
     }
 
-    // Option 2 Add
-    public static void addTimeSlot(ArrayList<TimeSlot> timeSlotList) {
+ // Option 2 Add
+    public static void addTimeSlot(ArrayList<TimeSlot> slots) {
         String newSlotId = Helper.readString("Enter slot ID (TS----) > ");
         String newDay = Helper.readString("Enter day > ");
         String newTime = Helper.readString("Enter time > ");
         String newDate = Helper.readString("Enter date (yyyy/mm/dd) > ");
 
         TimeSlot newTimeSlot = new TimeSlot(newSlotId, newDay, newTime, newDate);
-        timeSlotList.add(newTimeSlot);
+        slots.add(newTimeSlot);
 
         System.out.println("Time slot added successfully!");
     }
+
 
     // Option 3 Remove
     public static boolean removeTimeSlot(ArrayList<TimeSlot> timeSlotList) {
