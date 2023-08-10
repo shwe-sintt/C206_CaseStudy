@@ -75,7 +75,7 @@ public class myTimeSlot {
         }
     }
 
- // Option 2 Add
+    // Option 2 Add
     public static void addTimeSlot(ArrayList<TimeSlot> slots) {
         String newSlotId = Helper.readString("Enter slot ID (TS----) > ");
         String newDay = Helper.readString("Enter day > ");

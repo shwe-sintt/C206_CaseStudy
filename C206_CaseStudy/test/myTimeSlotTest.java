@@ -32,23 +32,19 @@ public class myTimeSlotTest {
     
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        // Code to be executed before running any tests in this class (if needed)
     }
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
-        // Code to be executed after running all tests in this class (if needed)
     }
 
     @Before
     public void setUp() throws Exception {
         myTimeSlot = new myTimeSlot();
-        // Code to set up test environment before each test case
     }
 
     @After
     public void tearDown() throws Exception {
-        // Code to clean up after each test case (if needed)
     }
 
     @Test
@@ -88,7 +84,6 @@ public class myTimeSlotTest {
         myTimeSlot.deleteTimeSlot(1);
     }
 
-    // Helper method to capture System.out
     private String captureSystemOut(Runnable action) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
