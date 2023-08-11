@@ -7,11 +7,17 @@ public class C206_CaseStudy {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		ArrayList<User> userList = new ArrayList<>();
-	    userList.add(new User("admin", "admin", "admin", "Admin", "Admin"));
-	    userList.add(new User("teacher", "teacher", "teacher1", "Teacher", "Teacher"));
-	    userList.add(new User("student", "student", "student1", "Student", "Student"));
+		ArrayList<User> userList = new ArrayList<User>();
+		
+	    userList.add(new User("admin", "admin", "admin", "Admin", "Admin","",""));
+	    userList.add(new User("teacher", "teacher", "teacher1", "Teacher", "Teacher","",""));
+	    userList.add(new User("student", "student", "student1", "Student", "Student","floorball",""));
+   
+//	    ArrayList<Activities> activityList = new ArrayList<Activities>();
+//
+//		activityList.add(new Activities("", "AA001", "Basketball", "Orange ball", "Must like orange"));
 
+		
 	    Scanner scanner = new Scanner(System.in);
 
 	    int choice = 0;
@@ -82,7 +88,7 @@ public class C206_CaseStudy {
         for (User user : userList) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password) && user.getRole().equalsIgnoreCase("teacher")) {
                 System.out.println("\nWelcome, Teacher!\n");
-                teacherMenu();
+                teacherMenu(userList);
                 return;
             }
         }
@@ -114,33 +120,32 @@ public class C206_CaseStudy {
         
     }
     
-    private static void adminMenu() {
-		Scanner scanner = new Scanner(System.in);
+    public static void adminMenu() {
+		Scanner scanner = new Scanner(System.in); 
 
 		int choice = 0;
-		while (choice != 7) {
+		while (choice != 4) {
 			System.out.println("** Admin Menu **\n");
-			System.out.println("1. Add a new student");
-			System.out.println("2. Update a student's information");
-			System.out.println("3. Delete a student");
-			System.out.println("4. View all students");
-			System.out.println("5. Log out");
+			System.out.println("1. Manage User Account");
+			System.out.println("2. Manage User Activities");
+			System.out.println("3. Manage User Registration");
+			System.out.println("4. Log out");
 
 			System.out.print("Enter your choice: ");
 			choice = scanner.nextInt();
 
 			switch (choice) {
 			case 1:
-				//addStudent();
+				manageUserAccounts();
 				break;
 			case 2:
-				// updateStudent();
+				//
 				break;
 			case 3:
-				// deleteStudent();
+				//
 				break;
 			case 4:
-				// viewAllStudents();
+				//
 				break;
 			case 5:
 				System.out.println("Logging out...");
@@ -148,17 +153,60 @@ public class C206_CaseStudy {
 			}
 		}
 	}
+    
+    public static void manageUserAccounts() {
+        Scanner scanner = new Scanner(System.in); 
 
-    private static void teacherMenu() {
+		ArrayList<User> userList = new ArrayList<User>();
+		
+	    userList.add(new User("22123456", "Amelia Row", "Amelia", " ", "Student", "Hockey", ""));
+	    userList.add(new User("22654321", "Rachelle Lim", "Rachelle", " ", "Student", "Floorball", ""));
+	    
+        int choice = 0;
+        while (choice != 5) {
+            System.out.println("\n** Manage User Accounts **\n");
+            System.out.println("1. View all students");
+            System.out.println("2. Add a new student");
+            System.out.println("3. Delete a student");
+            System.out.println("4. Back");
+
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+//                	viewAllStudent(userList);
+                	C206_CaseStudy.viewAllUser(userList);
+                    break;
+                case 2:
+//                	addUserAccount(userList);
+                	User stu = inputUser();
+					C206_CaseStudy.addUser(userList, stu);
+					System.out.println("Student added successfully!");
+                    break;
+                case 3:
+                	removeUser(userList);
+                    break;
+                case 4:
+                    System.out.println("Going back to the main menu...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void teacherMenu(ArrayList<User> userList) {
         Scanner scanner = new Scanner(System.in);
 
         int choice = 0;
-        while (choice != 4) {
+        while (choice != 5) {
             System.out.println("** Teacher Menu **\n");
             System.out.println("1. Manage Activity");
             System.out.println("2. Manage Registration");
             System.out.println("3. Manage Approval Status");
-            System.out.println("4. Log out");
+            System.out.println("4. Manage Attendance");
+            System.out.println("5. Log out");
 
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
@@ -174,7 +222,10 @@ public class C206_CaseStudy {
                     manageApprovalStatusMenu();
                     break;
                 case 4:
-                    System.out.println("Logging out...");
+                	ManageAttendance.manageAttendanceMenu(userList);
+                    break;
+                case 5:
+                    System.out.println("Logging out...\n");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -182,8 +233,13 @@ public class C206_CaseStudy {
         }
     }
 
+
     private static void manageActivityMenu() {
         Scanner scanner = new Scanner(System.in);
+        
+	    ArrayList<Activities> activityList = new ArrayList<Activities>();
+
+		activityList.add(new Activities("AA0011", "Basketball", "Orange ball", "Must like orange"));
 
         int choice = 0;
         while (choice != 4) {
@@ -195,16 +251,16 @@ public class C206_CaseStudy {
 
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
-
+            
             switch (choice) {
                 case 1:
-                    // Implement Add Activity functionality
+                	C206_CaseStudy.addActivity(activityList);
                     break;
                 case 2:
-                    // Implement Delete Activity functionality
+                	C206_CaseStudy.removeActivity(activityList);
                     break;
                 case 3:
-                    // Implement View All Activities functionality
+                	C206_CaseStudy.viewAllActivities(activityList);
                     break;
                 case 4:
                     System.out.println("Going back to the main menu...");
@@ -280,7 +336,7 @@ public class C206_CaseStudy {
         }
     }
 
-	
+ 
 	private static void studentMenu() {
 		Scanner scanner = new Scanner(System.in);
 
@@ -310,4 +366,149 @@ public class C206_CaseStudy {
 			
 		}
 	}
+	
+	//========================================================================================== Admin ============================================================================
+	
+	//================================= Option 1 View (CRUD - Read) =================================
+	public static String retrieveAllUser(ArrayList<User> userList) {
+		String output = "";
+
+		for (int i = 0; i < userList.size(); i++) {
+
+			output += String.format("%-60s\n", userList.get(i).toString());
+		}
+		return output;
+	}
+	
+	public static void viewAllUser(ArrayList<User> userList) {
+		String output = String.format("%-20s %-20s %-20s %-20s\n\n", "Student Name", "Student ID",
+				"Chosen Activity", "Attendance Status");
+		 output += retrieveAllUser(userList);	
+		System.out.println(output);
+	}
+	
+	//================================= Option 2 Add (CRUD - Create)=================================
+	public static User inputUser() {
+		String newUserName = Helper.readString("Enter student name > ");
+		String newUserId = Helper.readString("Enter student ID > ");
+		String newUserChosenAct = Helper.readString("Enter chosen activity > ");
+		String newUseruName = "";
+		String newUserPass = "";
+		String newUserRole = "Student";
+		String newAttendanceStatus = "";
+
+
+		User stu = new User(newUserId, newUserName, newUseruName, newUserPass, newUserRole, newUserChosenAct, newAttendanceStatus);
+		return stu;
+		
+	}
+	
+	public static void addUser(ArrayList<User> userList, User stu) {
+		User student;
+		for(int i = 0; i < userList.size(); i++) {
+			student = userList.get(i);
+			if (student.getName().equalsIgnoreCase(stu.getName()) )
+				return;
+		}
+		if ((stu.getName().isEmpty()) || (stu.getId().isEmpty()) || (stu.getActivityChosen().isEmpty())) {
+			return;
+		}
+		userList.add(stu);
+		
+	}
+	
+	//================================= Option 3 Remove (CRUD - Delete)=================================
+	public static boolean removeUser(ArrayList<User> userList) {
+
+		String removeStuID = Helper.readString("Enter student ID to remove > ");
+
+		boolean studentFound = false;
+		for (int i = 0; i < userList.size(); i++) {
+
+			if (userList.get(i).getId().equals(removeStuID)) {
+
+				userList.remove(i);
+				studentFound = true;
+				break;
+			}
+		}
+
+		if (studentFound) {
+			System.out.println("Student removed successfully!");
+		} else {
+			System.out.println("Student not found!");
+		}
+
+		return studentFound;
+	}
+	
+
+	
+	//========================================================================================== Teacher ============================================================================
+	//================================= Option 1 View (CRUD - Read) =================================
+	public static void viewAllActivities(ArrayList<Activities> activityList) {
+		
+		String output = String.format("%-20s %-20s %-20s %-20s\n", "Activity ID", "Activity Name", "Description",
+				"Prerequisites & Restrictions");
+
+		for (int i = 0; i < activityList.size(); i++) {
+
+			if (activityList.get(i) != null) {
+
+				String activityID = activityList.get(i).getActivityId();
+				String activityName = activityList.get(i).getActivityName();
+				String activityDesc = activityList.get(i).getActivityDescription();
+				String activityCrit = activityList.get(i).getActivityCriteria();
+
+				output += String.format("\n%-20s %-20s %-20s %-20s", activityID, activityName, activityDesc, activityCrit);
+
+			}
+		}
+		System.out.println(output);
+		// ------------------- END OF CODE
+
+	}
+	
+	//================================= Option 2 Add (CRUD - Create)=================================
+	public static void addActivity(ArrayList<Activities> activityList) {
+
+		String newActId = Helper.readString("Enter activity id (AA----) > ");
+		String newActName = Helper.readString("Enter activity name > ");
+		String newDesc = Helper.readString("Enter description > ");
+		String newCrit = Helper.readString("Enter prerequisites & restrictions > ");
+//		String stuId = "";
+
+		Activities newActivity = new Activities(newActId, newActName, newDesc, newCrit);
+		activityList.add(newActivity);
+
+		System.out.println("Activity added successfully!");
+	}
+	
+	//================================= Option 3 Remove (CRUD - Delete)=================================
+	public static boolean removeActivity(ArrayList<Activities> activityList) {
+
+		String removeActId = Helper.readString("Enter activity ID to remove (AA----) > ");
+
+		boolean activityFound = false;
+		for (int i = 0; i < activityList.size(); i++) {
+
+			if (activityList.get(i).getActivityId().equals(removeActId)) {
+
+				activityList.remove(i);
+				activityFound = true;
+				break;
+			}
+		}
+
+		if (activityFound) {
+			System.out.println("Activity removed successfully!");
+		} else {
+			System.out.println("Activity not found!");
+		}
+		return activityFound;
+	}
+	
+	//========================================================================================== Student ============================================================================
+	
+	
 }
