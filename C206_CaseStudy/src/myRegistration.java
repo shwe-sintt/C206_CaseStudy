@@ -23,7 +23,8 @@ public class myRegistration {
 
             switch (choice) {
                 case 1:
-                	addRegistration(rlist);
+                	registration r =inputRegistration();
+                	addRegistration(rlist,r);
                 	break;
                 case 2:
                 	deleteRegistration(rlist);
@@ -39,24 +40,41 @@ public class myRegistration {
             }
         }
 	}
-	
-		public static void addRegistration(ArrayList<registration> rlist) {
-
+		
+		public static registration inputRegistration() {
 			String newStuName = Helper.readString("Enter your name > ");
 			String newStuID = Helper.readString("Enter your student ID > ");
 			String newAct = Helper.readString("Enter your chosen activity > ");
-
 			registration newRegistration = new registration(newStuID, newStuName, newAct);
-			rlist.add(newRegistration);
-
+			return newRegistration;
+		}
+		public static void addRegistration(ArrayList<registration> rList, registration r) {
+			registration item;
+			for(int i = 0; i < rList.size(); i++) {
+				item = rList.get(i);
+				if (item.getStudentId().equalsIgnoreCase(r.getStudentId()) )
+					return;
+			}
+			if ((r.getStudentId().isEmpty()) || (r.getName().isEmpty()) ) {
+				return;
+			}
+			rList.add(r);
 			System.out.println("Registration added successfully!");
-		
-		
-	}
-		public static boolean deleteRegistration(ArrayList<registration> rlist) {
 
+		}
+
+		
+		public static void deleteRegistration(ArrayList<registration> rlist) {
+			viewAllRegistration(rlist);
 			String removeStuID = Helper.readString("Enter student ID to remove > ");
-
+			Boolean studentFound=doDeleteRegistration(rlist,removeStuID);
+			if (studentFound==false) {
+				System.out.println("Invalid Student ID entered");
+			} else {
+				System.out.println("Student ID " + removeStuID + " deleted!");
+			}
+		}
+		public static boolean doDeleteRegistration(ArrayList<registration> rlist,String removeStuID) {
 			boolean studentFound = false;
 			for (int i = 0; i < rlist.size(); i++) {
 
@@ -76,12 +94,9 @@ public class myRegistration {
 
 			return studentFound;
 		}
-		public static void viewAllRegistration(ArrayList<registration> rlist) {
 
-			
-			String output = String.format("%-20s %-20s %-20s\n", "Student Name", "Student ID",
-					"Chosen Activity");
-
+		public static String retrieveAllRegistration(ArrayList<registration> rlist) {
+			String output = "";
 			for (int i = 0; i < rlist.size(); i++) {
 
 				if (rlist.get(i) != null) {
@@ -93,8 +108,13 @@ public class myRegistration {
 					output += String.format("\n%-20s %-20s %-20s", studentName, studentId, activityChosen);
 
 				}
-			}
+			}return output;	
+		}
+		public static void viewAllRegistration(ArrayList<registration> rlist) {
+			
+			String output = String.format("%-20s %-20s %-20s\n", "Student Name", "Student ID",
+					"Chosen Activity");
+			output+=retrieveAllRegistration(rlist);
 			System.out.println(output);
 		}
-
 }
