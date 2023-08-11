@@ -80,7 +80,7 @@ public class myTimeSlotTest {
 
         assertEquals("NewDay", timeSlot.getDay());
         assertEquals("NewTime", timeSlot.getTime());
-        assertEquals("2023/08/11", timeSlot.getDate());
+        assertEquals("NewDate", timeSlot.getDate());
 
         updated = myTimeSlot.updateTimeSlot(timeSlotList);
         assertFalse(updated);
