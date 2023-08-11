@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,50 +50,39 @@ public class myTimeSlotTest {
     }
 
     @Test
-    public void testAddTimeSlot_Normal() {
-        myTimeSlot.addTimeSlot("Monday, 9:00 AM - 10:00 AM");
-        myTimeSlot.addTimeSlot("Tuesday, 2:00 PM - 3:00 PM");
-
-        assertEquals(2, myTimeSlot.getId().size());
-        assertEquals("Monday, 9:00 AM - 10:00 AM", myTimeSlot.getId().get(0));
-        assertEquals("Tuesday, 2:00 PM - 3:00 PM", myTimeSlot.getIdS().get(1));
+    public void testAddTimeSlot() {
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
+        myTimeSlot.addTimeSlot(timeSlotList);
+        assertEquals(1, timeSlotList.size());
     }
 
     @Test
-    public void testViewAllTimeSlots_Empty() {
-        String output = captureSystemOut(() -> myTimeSlot.viewAllTimeSlots());
-        assertTrue(output.contains("No time slots available."));
+    public void testRemoveTimeSlot() {
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
+        timeSlotList.add(new TimeSlot("TS001", "Monday", "13:00", "2023/08/10"));
+
+        boolean removed = myTimeSlot.removeTimeSlot(timeSlotList);
+        assertTrue(removed);
+        assertEquals(0, timeSlotList.size());
+
+        removed = myTimeSlot.removeTimeSlot(timeSlotList);
+        assertFalse(removed);
     }
 
     @Test
-    public void testDeleteTimeSlot_Normal() {
-        myTimeSlot.addTimeSlot("Monday, 9:00 AM - 10:00 AM");
-        myTimeSlot.addTimeSlot("Tuesday, 2:00 PM - 3:00 PM");
+    public void testUpdateTimeSlot() {
+        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
+        TimeSlot timeSlot = new TimeSlot("TS001", "Monday", "13:00", "2023/08/10");
+        timeSlotList.add(timeSlot);
 
-        myTimeSlot.deleteTimeSlot(1);
-        assertEquals(1, myTimeSlot.getTimeSlots().size());
-        assertEquals("Tuesday, 2:00 PM - 3:00 PM", myTimeSlot.getTimeSlots().get(0));
-    }
+        boolean updated = myTimeSlot.updateTimeSlot(timeSlotList);
+        assertTrue(updated);
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testDeleteTimeSlot_InvalidIndex() {
-        myTimeSlot.addTimeSlot("Monday, 9:00 AM - 10:00 AM");
-        myTimeSlot.deleteTimeSlot(2);
-    }
+        assertEquals("NewDay", timeSlot.getDay());
+        assertEquals("NewTime", timeSlot.getTime());
+        assertEquals("2023/08/11", timeSlot.getDate());
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testDeleteTimeSlot_EmptyList() {
-        myTimeSlot.deleteTimeSlot(1);
-    }
-
-    private String captureSystemOut(Runnable action) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream originalOut = System.out;
-        System.setOut(new PrintStream(outputStream));
-
-        action.run();
-
-        System.setOut(originalOut);
-        return outputStream.toString();
+        updated = myTimeSlot.updateTimeSlot(timeSlotList);
+        assertFalse(updated);
     }
 }
