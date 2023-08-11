@@ -222,7 +222,7 @@ public class C206_CaseStudy {
                     manageApprovalStatusMenu();
                     break;
                 case 4:
-                    manageAttendanceMenu(userList);
+                	ManageAttendance.manageAttendanceMenu(userList);
                     break;
                 case 5:
                     System.out.println("Logging out...\n");
@@ -336,110 +336,7 @@ public class C206_CaseStudy {
         }
     }
 
-    private static void manageAttendanceMenu(ArrayList<User> userList) {
-        Scanner scanner = new Scanner(System.in);
-
-        int choice = 0;
-        while (choice != 4) {
-            System.out.println("\n** Manage Attendance **\n");
-            System.out.println("1. View Attendance");
-            System.out.println("2. Add Attendance");
-            System.out.println("3. Delete Attendance");
-            System.out.println("4. Back");
-
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1:
-                    viewAttendance(userList);
-                    break;
-                case 2:
-                    addAttendance(userList);
-                    break;
-                case 3:
-                    deleteAttendance(userList);
-                    break;
-                case 4:
-                    System.out.println("Going back to the main menu...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
-
-//========================================================================== Attendance Status ======================================================
-    private static void viewAttendance(ArrayList<User> userList) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter activity code: ");
-        String activityCode = scanner.nextLine();
-
-        boolean foundAttendance = false;
-
-        for (User user : userList) {
-            if ("student".equalsIgnoreCase(user.getRole()) && activityCode.equals(user.getActivityChosen()) && !user.getAttendanceStatus().isEmpty()) {
-                System.out.println("\n** View Attendance **");
-                System.out.println("Attendance Records:");
-                System.out.println("+----+-----------------+-----------+----------------+");
-                System.out.printf("| %-2s | %-15s | %-10s | %-14s |%n", "ID", "Name", "Username", "Attendance");
-                System.out.println("+----+-----------------+-----------+----------------+");
-                System.out.printf("| %-2s | %-15s | %-10s | %-14s |%n", user.getId(), user.getName(), user.getUsername(), user.getAttendanceStatus());
-                System.out.println("+----+-----------------+-----------+----------------+");
-                foundAttendance = true;
-            }
-        }
-
-        if (!foundAttendance) {
-            System.out.println("No attendance records found.");
-        }
-    }
-
-    private static void addAttendance(ArrayList<User> userList) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter activity code: ");
-        String activityCode = scanner.nextLine();
-
-        System.out.print("Enter student name: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Enter attendance status (Present/Absent): ");
-        String attendanceStatus = scanner.nextLine();
-
-        for (User user : userList) {
-            if ("student".equalsIgnoreCase(user.getRole()) && user.getActivityChosen().equals(activityCode) && user.getName().equalsIgnoreCase(name)) {
-                user.setAttendanceStatus(attendanceStatus);
-                System.out.println("\nAttendance added for " + name + ": " + attendanceStatus);
-                return;
-            }
-        }
-
-        System.out.println("\nStudent not found or not associated with the specified activity.");
-    }
-
-    private static void deleteAttendance(ArrayList<User> userList) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter activity code: ");
-        String activityCode = scanner.nextLine();
-
-        System.out.print("Enter student name to delete attendance: ");
-        String name = scanner.nextLine();
-
-        for (User user : userList) {
-            if ("student".equalsIgnoreCase(user.getRole()) && user.getActivityChosen().equals(activityCode) && user.getName().equalsIgnoreCase(name)) {
-                user.setAttendanceStatus("");
-                System.out.println("Attendance record for " + name + " deleted.");
-                return;
-            }
-        }
-
-        System.out.println("Attendance record for " + name + " not found or not associated with the specified activity.");
-    }
-
-	
+ 
 	private static void studentMenu() {
 		Scanner scanner = new Scanner(System.in);
 
@@ -608,7 +505,6 @@ public class C206_CaseStudy {
 		} else {
 			System.out.println("Activity not found!");
 		}
-//marssjbks
 		return activityFound;
 	}
 	
