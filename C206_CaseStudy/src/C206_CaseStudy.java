@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class C206_CaseStudy {
@@ -304,37 +305,105 @@ public class C206_CaseStudy {
         }
     }
 
-    private static void manageApprovalStatusMenu() {
-        Scanner scanner = new Scanner(System.in);
+	private static void manageApprovalStatusMenu(StatusManager statusManager) {
+	    Scanner scanner = new Scanner(System.in);
 
-        int choice = 0;
-        while (choice != 4) {
-            System.out.println("** Manage Approval Status **\n");
-            System.out.println("1. Add Approval Status");
-            System.out.println("2. Delete Approval Status");
-            System.out.println("3. View Approval Status");
-            System.out.println("4. Back");
+	    int choice = 0;
+	    while (choice != 4) {
+	        System.out.println("** Manage Approval Status **\n");
+	        System.out.println("1. Add Approval Status");
+	        System.out.println("2. Delete Approval Status");
+	        System.out.println("3. View Approval Status");
+	        System.out.println("4. Back");
 
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
+	        System.out.print("Enter your choice: ");
+	        choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1:
-                    //addStatus
-                case 2:
-                    //deleteStatus
-                    break;
-                case 3:
-                    //viewAllStatus
-                    break;
-                case 4:
-                    System.out.println("Going back to the main menu...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
+	        switch (choice) {
+	            case 1:
+	                addApprovalStatus(statusManager);
+	                break;
+	            case 2:
+	                deleteApprovalStatus(statusManager);
+	                break;
+	            case 3:
+	                viewApprovalStatuses(statusManager);
+	                break;
+	            case 4:
+	                System.out.println("Going back to the main menu...");
+	                break;
+	            default:
+	                System.out.println("Invalid choice. Please try again.");
+	        }
+	    }
+	}
+
+	private static void viewApprovalStatuses(StatusManager statusManager) {
+	    List<ApprovalStatus> allStatuses = statusManager.getApprovalStatuses();
+	    if (allStatuses.isEmpty()) {
+	        System.out.println("No records to display.");
+	    } else {
+	        System.out.println("Approval Statuses:");
+	        for (ApprovalStatus status : allStatuses) {
+	            System.out.println("Name: " + status.getName() + ", Description: " + status.getDescription());
+	        }
+	    }
+	}
+
+	private static void deleteApprovalStatus(StatusManager statusManager) {
+	    Scanner scanner = new Scanner(System.in);
+
+	    System.out.print("Enter the name of the approval status to delete: ");
+	    String statusToDelete = scanner.next();
+
+	    ApprovalStatus status = findApprovalStatusByName(statusToDelete, statusManager);
+	    if (status != null) {
+	        System.out.print("Are you sure you want to delete '" + status.getName() + "'? (yes/no): ");
+	        String confirmation = scanner.next();
+
+	        if (confirmation.equalsIgnoreCase("yes")) {
+	            statusManager.deleteApprovalStatus(statusToDelete);
+	            System.out.println("Approval status deleted successfully.");
+	        } else {
+	            System.out.println("Deletion cancelled.");
+	        }
+	    } else {
+	        System.out.println("Approval status not found.");
+	    }
+	}
+
+
+	public static ApprovalStatus findApprovalStatusByName(String statusToDelete, StatusManager statusManager) {
+	    List<ApprovalStatus> allStatuses = statusManager.getApprovalStatuses();
+	    for (ApprovalStatus status : allStatuses) {
+	        if (status.getName().equalsIgnoreCase(statusToDelete)) {
+	            return status;
+	        }
+	    }
+	    return null;
+	}
+
+
+	private static void addApprovalStatus(StatusManager statusManager) {
+	    Scanner scanner = new Scanner(System.in);
+
+	    System.out.print("Enter unique name for the new approval status: ");
+	    String newStatusName = scanner.next();
+
+	    System.out.print("Enter description for the new approval status: ");
+	    String newStatusDescription = scanner.next();
+
+	    if (!newStatusName.isEmpty() && !newStatusDescription.isEmpty()) {
+	        if (statusManager.isApprovalStatusNameUnique(newStatusName)) {
+	            statusManager.addApprovalStatus(newStatusName, newStatusDescription);
+	            System.out.println("Approval status added successfully.");
+	        } else {
+	            System.out.println("An approval status with the same name already exists.");
+	        }
+	    } else {
+	        System.out.println("Name and description cannot be empty.");
+	    }
+	}
 
  
 	private static void studentMenu() {
