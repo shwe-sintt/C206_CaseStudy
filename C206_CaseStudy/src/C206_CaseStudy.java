@@ -12,7 +12,12 @@ public class C206_CaseStudy {
 	    userList.add(new User("admin", "admin", "admin", "Admin", "Admin","",""));
 	    userList.add(new User("teacher", "teacher", "teacher1", "Teacher", "Teacher","",""));
 	    userList.add(new User("student", "student", "student1", "Student", "Student","floorball",""));
+   
+//	    ArrayList<Activities> activityList = new ArrayList<Activities>();
+//
+//		activityList.add(new Activities("", "AA001", "Basketball", "Orange ball", "Must like orange"));
 
+		
 	    Scanner scanner = new Scanner(System.in);
 
 	    int choice = 0;
@@ -154,8 +159,8 @@ public class C206_CaseStudy {
 
 		ArrayList<User> userList = new ArrayList<User>();
 		
-	    userList.add(new User("22123456", "Amelia Row", "Amelia", " ", "Student", "Hockey",""));
-	    userList.add(new User("22654321", "Rachelle Lim", "Rachelle", " ", "Student", "Floorball",""));
+	    userList.add(new User("22123456", "Amelia Row", "Amelia", " ", "Student", "Hockey", ""));
+	    userList.add(new User("22654321", "Rachelle Lim", "Rachelle", " ", "Student", "Floorball", ""));
 	    
         int choice = 0;
         while (choice != 5) {
@@ -231,6 +236,10 @@ public class C206_CaseStudy {
 
     private static void manageActivityMenu() {
         Scanner scanner = new Scanner(System.in);
+        
+	    ArrayList<Activities> activityList = new ArrayList<Activities>();
+
+		activityList.add(new Activities("AA0011", "Basketball", "Orange ball", "Must like orange"));
 
         int choice = 0;
         while (choice != 4) {
@@ -242,16 +251,16 @@ public class C206_CaseStudy {
 
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
-
+            
             switch (choice) {
                 case 1:
-                    // Implement Add Activity functionality
+                	C206_CaseStudy.addActivity(activityList);
                     break;
                 case 2:
-                    // Implement Delete Activity functionality
+                	C206_CaseStudy.removeActivity(activityList);
                     break;
                 case 3:
-                    // Implement View All Activities functionality
+                	C206_CaseStudy.viewAllActivities(activityList);
                     break;
                 case 4:
                     System.out.println("Going back to the main menu...");
@@ -360,6 +369,7 @@ public class C206_CaseStudy {
         }
     }
 
+//========================================================================== Attendance Status ======================================================
     private static void viewAttendance(ArrayList<User> userList) {
         Scanner scanner = new Scanner(System.in);
 
@@ -474,8 +484,8 @@ public class C206_CaseStudy {
 	}
 	
 	public static void viewAllUser(ArrayList<User> userList) {
-		String output = String.format("%-20s %-20s %-20s\n\n", "Student Name", "Student ID",
-				"Chosen Activity");
+		String output = String.format("%-20s %-20s %-20s %-20s\n\n", "Student Name", "Student ID",
+				"Chosen Activity", "Attendance Status");
 		 output += retrieveAllUser(userList);	
 		System.out.println(output);
 	}
@@ -488,11 +498,10 @@ public class C206_CaseStudy {
 		String newUseruName = "";
 		String newUserPass = "";
 		String newUserRole = "Student";
-		String newAttendance = "";
-		
+		String newAttendanceStatus = "";
 
 
-		User stu = new User(newUserId, newUserName, newUseruName, newUserPass, newUserRole, newUserChosenAct, newAttendance);
+		User stu = new User(newUserId, newUserName, newUseruName, newUserPass, newUserRole, newUserChosenAct, newAttendanceStatus);
 		return stu;
 		
 	}
@@ -539,12 +548,69 @@ public class C206_CaseStudy {
 
 	
 	//========================================================================================== Teacher ============================================================================
+	//================================= Option 1 View (CRUD - Read) =================================
+	public static void viewAllActivities(ArrayList<Activities> activityList) {
+		
+		String output = String.format("%-20s %-20s %-20s %-20s\n", "Activity ID", "Activity Name", "Description",
+				"Prerequisites & Restrictions");
+
+		for (int i = 0; i < activityList.size(); i++) {
+
+			if (activityList.get(i) != null) {
+
+				String activityID = activityList.get(i).getActivityId();
+				String activityName = activityList.get(i).getActivityName();
+				String activityDesc = activityList.get(i).getActivityDescription();
+				String activityCrit = activityList.get(i).getActivityCriteria();
+
+				output += String.format("\n%-20s %-20s %-20s %-20s", activityID, activityName, activityDesc, activityCrit);
+
+			}
+		}
+		System.out.println(output);
+		// ------------------- END OF CODE
+
+	}
 	
+	//================================= Option 2 Add (CRUD - Create)=================================
+	public static void addActivity(ArrayList<Activities> activityList) {
+
+		String newActId = Helper.readString("Enter activity id (AA----) > ");
+		String newActName = Helper.readString("Enter activity name > ");
+		String newDesc = Helper.readString("Enter description > ");
+		String newCrit = Helper.readString("Enter prerequisites & restrictions > ");
+//		String stuId = "";
+
+		Activities newActivity = new Activities(newActId, newActName, newDesc, newCrit);
+		activityList.add(newActivity);
+
+		System.out.println("Activity added successfully!");
+	}
 	
-	
-	
-	
-	
+	//================================= Option 3 Remove (CRUD - Delete)=================================
+	public static boolean removeActivity(ArrayList<Activities> activityList) {
+
+		String removeActId = Helper.readString("Enter activity ID to remove (AA----) > ");
+
+		boolean activityFound = false;
+		for (int i = 0; i < activityList.size(); i++) {
+
+			if (activityList.get(i).getActivityId().equals(removeActId)) {
+
+				activityList.remove(i);
+				activityFound = true;
+				break;
+			}
+		}
+
+		if (activityFound) {
+			System.out.println("Activity removed successfully!");
+		} else {
+			System.out.println("Activity not found!");
+		}
+//marssjbks
+		return activityFound;
+	}
 	
 	//========================================================================================== Student ============================================================================
 	
