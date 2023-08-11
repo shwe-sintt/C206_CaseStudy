@@ -50,4 +50,11 @@ public class registration {
 	    public void setApprovalStatus(String approvalStatus) {
 	        this.approvalStatus = approvalStatus;
 	    }
+	    public String toString() {
+			
+			String regiInfo = String.format("%-20s %-20s %-20s %-20s", 
+					studentId,name,activityChosen,approvalStatus);
+			
+			return regiInfo;
+		}
 }
