@@ -30,6 +30,9 @@ public class C206_CaseStudyTest {
 	private StatusManager statusManager;
     private myTimeSlot myTimeSlot;
     
+    private User student1;
+    private User student2;
+    
     
 	@Test
 	public void c206_test() {
@@ -58,6 +61,13 @@ public class C206_CaseStudyTest {
 	    t1 = new User ("T123", "Lin Cin", "lincin", "lincin", "Teacher", " ", " ");
 		
 	    userList = new ArrayList<User>();
+	    
+	    student1 = new User("S1", "John", "john69", "john42069", "student", "Activity1", "present");
+        student2 = new User("S2", "Mary", "mary69", "mary42069", "student", "Activity1", "present");
+
+        userList = new ArrayList<>();
+        userList.add(student1);
+        userList.add(student2);
     }
 
     @After
@@ -93,6 +103,12 @@ public class C206_CaseStudyTest {
         ApprovalStatus pendingStatus = statusManager.getApprovalStatuses().get(1);
         assertEquals("Pending", pendingStatus.getName());
         assertEquals("Application is pending", pendingStatus.getDescription());
+    }
+    
+    @Test
+    public void testViewAttendance() {
+		assertNotNull("Test if there is valid user arraylist to retrieve item", userList);
+        ManageAttendance.viewAttendance(userList);
     }
     
 
@@ -135,6 +151,21 @@ public class C206_CaseStudyTest {
 
         removed = myTimeSlot.removeTimeSlot(timeSlotList);
         assertFalse(removed);
+    }
+    
+    @Test
+    public void testAddAttendance() {
+		assertNotNull("Test if there is valid user arraylist to retrieve item", userList);
+
+        ManageAttendance.addAttendance(userList, student1);
+        
+        assertEquals("Check that user arraylist size is 1", 1, userList.size());
+		assertSame("Check that student is added", student1, userList.get(0));
+		
+		ManageAttendance.addAttendance(userList, student2);
+		assertEquals("Check that user arraylist size is 2", 2, userList.size());
+		assertSame("Check that student is added",student2, userList.get(1));
+        
     }
 
     @Test
@@ -199,6 +230,24 @@ public class C206_CaseStudyTest {
 		    C206_CaseStudy.doRemoveActivity(activityList, a1.getActivityId());
 		    assertEquals("Test that Activities arrayList is 0?", 1, activityList.size());
 		    assertSame("Test that activityList is added same as 3rd item of the list?", a2 ,activityList.get(0));
+		
+	}
+	
+	@Test
+	public void testDeleteAttendance() {
+
+			ManageAttendance.addAttendance(userList, student1);
+			ManageAttendance.addAttendance(userList, student2);
+			assertEquals("Test if that user arraylist size is 2", 2, userList.size());
+			
+		    assertSame("Test that student added is 1st student of the list", student1, userList.get(0));
+
+		    
+		    assertNotNull("test if there is valid user arraylist to delete to", userList);
+		    
+		    ManageAttendance.deleteAttendance(userList, student1.getName());
+		    assertEquals("Test that user arrayList size is 1", 1, userList.size());
+		    assertSame("Test that student is the first item", student2 ,userList.get(0));
 		
 	}
 	
