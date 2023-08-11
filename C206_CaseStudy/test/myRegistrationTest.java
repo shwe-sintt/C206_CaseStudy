@@ -19,8 +19,6 @@ public class myRegistrationTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		teacher=new User("T19001900","John Mam","johnmam","johnnie","teacher");
-		student=new User("S22002200","Patrick Park","patrickpark","parkie","student");
 		
 		r1=new registration("S22002200","Patrick Park","basketball");
 		r2=new registration("S23002300","Susan","volleyball");
@@ -33,9 +31,7 @@ public class myRegistrationTest {
 
 	@After
 	public void tearDown() throws Exception {
-		admin=null;
-		teacher=null;
-		student=null;
+		
 		r1=null;
 		r2=null;
 		studentList=null;
@@ -72,10 +68,10 @@ public class myRegistrationTest {
 		    assertSame("Test that regi added same as the 1st regi of the list?", r1, regiList.get(0));
 
 		    
-		    // Test if wheels list is not null but empty, so that can add new item
+		    // Test if regi list is not null but empty, so that can add new item
 		    assertNotNull("test if there is valid regi arraylist to delete to", regiList);
 		    
-		 // Delete the wheel bike part , test the size of the list is 1
+		 // Delete the regi part , test the size of the list is 1
 		    myRegistration.doDeleteRegistration(regiList, r1.getStudentId());
 		    assertEquals("Test that Wheels arrayList is 0?", 1, regiList.size());
 		    assertSame("Test that WheelsList is added same as 3rd item of the list?", r2 ,regiList.get(0));
