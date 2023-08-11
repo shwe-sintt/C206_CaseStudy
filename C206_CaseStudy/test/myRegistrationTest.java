@@ -95,15 +95,11 @@ public class myRegistrationTest {
 	    assertEquals("Test that the title row is correct", testOutput, allRegistrations.substring(0, testOutput.length()));
 
 	    // Add registrations to the list
-//	    registration r1 = new registration("John Doe", "12345", "Chess");
-//	    registration r2 = new registration("Jane Smith", "67890", "Music");
 	    myRegistration.addRegistration(regiList,r1);
 	    myRegistration.addRegistration(regiList,r2);
 
 	    // Test if the expected output string is the same as the list of registrations retrieved
 	    allRegistrations = myRegistration.retrieveAllRegistration(regiList);
-//	    testOutput = String.format("%-20s %-20s %-20s\n", "John Doe", "12345", "Chess");
-//	    testOutput += String.format("%-20s %-20s %-20s\n", "Jane Smith", "67890", "Music");
 	    
 	    testOutput = String.format("%-20s %-20s %-20s\n","Patrick Park","S22002200","basketball");
 	    testOutput += String.format("%-20s %-20s %-20s\n","Susan","S23002300","volleyball");

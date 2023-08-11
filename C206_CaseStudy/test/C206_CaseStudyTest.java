@@ -26,15 +26,12 @@ public class C206_CaseStudyTest {
     @Before
     public void setUp() {
         statusManager = new StatusManager();
-<<<<<<< HEAD
         myTimeSlot = new myTimeSlot();
-=======
         a1 = new Activities("AA0011", "Basketball", "Ball", "Basket");
 		a2 = new Activities("AA0022", "Football", "Ball", "Foot");
 		a3 = new Activities("AA0033", "Baseball", "Ball", "Base");
 
 		activityList= new ArrayList<Activities>();
->>>>>>> branch 'master' of https://github.com/shwe-sintt/C206_CaseStudy.git
     }
 
     @After
@@ -82,7 +79,7 @@ public class C206_CaseStudyTest {
         assertTrue(statusManager.isApprovalStatusNameUnique("Rejected"));
         assertFalse(statusManager.isApprovalStatusNameUnique("Approved"));
     }
-<<<<<<< HEAD
+
         
     @Test
     public void testAddTimeSlot() {
@@ -120,8 +117,7 @@ public class C206_CaseStudyTest {
         updated = myTimeSlot.updateTimeSlot(timeSlotList);
         assertFalse(updated);
     }
-=======
-    
+
 	@Test
 	public void testAddActivity() {
 		// Item list is not null and it is empty
@@ -191,12 +187,5 @@ public class C206_CaseStudyTest {
 		testOutput += String.format("%-20s %-20s %-20s %-20s\n", "AA0022", "Football", "Ball", "Foot");
 
 		assertEquals("Check that viewAllActivities list", testOutput.trim(), allActivities.trim());
-
 	}
->>>>>>> branch 'master' of https://github.com/shwe-sintt/C206_CaseStudy.git
 }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/shwe-sintt/C206_CaseStudy.git
