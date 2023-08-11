@@ -144,15 +144,12 @@ public class C206_CaseStudy {
 				manageUserAccounts(userList);
 				break;
 			case 2:
-				//
+				manageActivityMenu();
 				break;
 			case 3:
-				//
+				manageRegistrationMenu();
 				break;
 			case 4:
-				//
-				break;
-			case 5:
 				System.out.println("Logging out...");
 
 			}
@@ -161,11 +158,8 @@ public class C206_CaseStudy {
     
     public static void manageUserAccounts(ArrayList<User> userList) {
         Scanner scanner = new Scanner(System.in); 
-
-
-	    
         int choice = 0;
-        while (choice != 5) {
+        while (choice != 4) {
             System.out.println("\n** Manage User Accounts **\n");
             System.out.println("1. View all user");
             System.out.println("2. Add a new user");
@@ -471,7 +465,7 @@ public class C206_CaseStudy {
 		activityList.add(new Activities("AA0011", "Basketball", "Orange ball", "Must like orange"));
 
 		int choice = 0;
-		while (choice != 7) {
+		while (choice != 3) {
 			System.out.println("** Student Menu **\n");
 			System.out.println("1. Apply for an activity");
 			System.out.println("2. View all activity");
