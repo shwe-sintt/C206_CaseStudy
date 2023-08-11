@@ -7,14 +7,14 @@ public class C206_CaseStudy {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		ArrayList<User> userList = new ArrayList<User>();
+		ArrayList<User3> userList = new ArrayList<User3>();
 		
-	    userList.add(new User("admin", "admin", "admin", "Admin", "Admin","",""));
-	    userList.add(new User("T123", "Lin Cin", "lincin", "lincin", "Teacher","",""));
-	    userList.add(new User("student", "student", "student1", "Student", "Student","floorball",""));
+	    userList.add(new User3("admin", "admin", "admin", "Admin", "Admin","",""));
+	    userList.add(new User3("T123", "Lin Cin", "lincin", "lincin", "Teacher","",""));
+	    userList.add(new User3("student", "student", "student1", "Student", "Student","floorball",""));
 		
-	    userList.add(new User("22123456", "Amelia Row", "Amelia", " ", "Student", "Hockey", ""));
-	    userList.add(new User("22654321", "Rachelle Lim", "Rachelle", " ", "Student", "Floorball", ""));
+	    userList.add(new User3("22123456", "Amelia Row", "Amelia", " ", "Student", "Hockey", ""));
+	    userList.add(new User3("22654321", "Rachelle Lim", "Rachelle", " ", "Student", "Floorball", ""));
    
 //	    ArrayList<Activities> activityList = new ArrayList<Activities>();
 //
@@ -55,7 +55,7 @@ public class C206_CaseStudy {
 	    
 	}
 	
-	private static void loginAdmin(ArrayList<User> userList) {
+	private static void loginAdmin(ArrayList<User3> userList) {
 		Scanner scanner = new Scanner(System.in);
 
         String username, password;
@@ -66,7 +66,7 @@ public class C206_CaseStudy {
         System.out.print("Enter your password: ");
         password = scanner.nextLine();
 
-        for (User user : userList) {
+        for (User3 user : userList) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password) && user.getRole().equalsIgnoreCase("admin")) {
                 System.out.println("\nWelcome, Admin!\n");
                 adminMenu(userList);
@@ -77,7 +77,7 @@ public class C206_CaseStudy {
         System.out.println("Invalid username, password, or role!");
     }
 
-    private static void loginTeacher(ArrayList<User> userList) {
+    private static void loginTeacher(ArrayList<User3> userList) {
     	Scanner scanner = new Scanner(System.in);
 
         String username, password;
@@ -88,7 +88,7 @@ public class C206_CaseStudy {
         System.out.print("Enter your password: ");
         password = scanner.nextLine();
 
-        for (User user : userList) {
+        for (User3 user : userList) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password) && user.getRole().equalsIgnoreCase("teacher")) {
                 System.out.println("\nWelcome, Teacher!\n");
                 teacherMenu(userList);
@@ -100,7 +100,7 @@ public class C206_CaseStudy {
     	
     }
 
-    private static void loginStudent(ArrayList<User> userList) {
+    private static void loginStudent(ArrayList<User3> userList) {
     	Scanner scanner = new Scanner(System.in);
 
         String username, password;
@@ -111,7 +111,7 @@ public class C206_CaseStudy {
         System.out.print("Enter your password: ");
         password = scanner.nextLine();
 
-        for (User user : userList) {
+        for (User3 user : userList) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password) && user.getRole().equalsIgnoreCase("student")) {
                 System.out.println("\nWelcome, Student!\n");
                 studentMenu();
@@ -123,7 +123,7 @@ public class C206_CaseStudy {
         
     }
     
-    public static void adminMenu(ArrayList<User> userList) {
+    public static void adminMenu(ArrayList<User3> userList) {
 		Scanner scanner = new Scanner(System.in); 
 
 		int choice = 0;
@@ -157,7 +157,7 @@ public class C206_CaseStudy {
 		}
 	}
     
-    public static void manageUserAccounts(ArrayList<User> userList) {
+    public static void manageUserAccounts(ArrayList<User3> userList) {
         Scanner scanner = new Scanner(System.in); 
 
 
@@ -180,7 +180,7 @@ public class C206_CaseStudy {
                     break;
                 case 2:
 //                	addUserAccount(userList);
-                	User stu = inputUser();
+                	User3 stu = inputUser();
 					C206_CaseStudy.addUser(userList, stu);
 					System.out.println("User added successfully!");
                     break;
@@ -196,7 +196,7 @@ public class C206_CaseStudy {
         }
     }
 
-    private static void teacherMenu(ArrayList<User> userList) {
+    private static void teacherMenu(ArrayList<User3> userList) {
         Scanner scanner = new Scanner(System.in);
 
         int choice = 0;
@@ -370,7 +370,7 @@ public class C206_CaseStudy {
 	//========================================================================================== Admin ============================================================================
 	
 	//================================= Option 1 View (CRUD - Read) =================================
-	public static String retrieveAllUser(ArrayList<User> userList) {
+	public static String retrieveAllUser(ArrayList<User3> userList) {
 		String output = "";
 
 		for (int i = 0; i < userList.size(); i++) {
@@ -380,7 +380,7 @@ public class C206_CaseStudy {
 		return output;
 	}
 	
-	public static void viewAllUser(ArrayList<User> userList) {
+	public static void viewAllUser(ArrayList<User3> userList) {
 		String output = String.format("%-20s %-20s %-20s %-20s %-20s\n\n", "User Name", "User ID",
 				"Chosen Activity", "Attendance Status", "Role");
 		 output += retrieveAllUser(userList);	
@@ -388,7 +388,7 @@ public class C206_CaseStudy {
 	}
 	
 	//================================= Option 2 Add (CRUD - Create)=================================
-	public static User inputUser() {
+	public static User3 inputUser() {
 		String newUserName = Helper.readString("Enter user name > ");
 		String newUserId = Helper.readString("Enter user ID > ");
 		String newUserChosenAct = Helper.readString("Enter chosen activity (for students) > ");
@@ -397,13 +397,13 @@ public class C206_CaseStudy {
 		String newUserPass = "";
 
 
-		User stu = new User(newUserId, newUserName, newUseruName, newUserPass, newUserRole, newUserChosenAct);
+		User3 stu = new User3(newUserId, newUserName, newUseruName, newUserPass, newUserRole, newUserChosenAct);
 		return stu;
 		
 	}
 	
-	public static void addUser(ArrayList<User> userList, User stu) {
-		User user;
+	public static void addUser(ArrayList<User3> userList, User3 stu) {
+		User3 user;
 		for(int i = 0; i < userList.size(); i++) {
 			user = userList.get(i);
 			if (user.getName().equalsIgnoreCase(stu.getName()) )
@@ -417,7 +417,7 @@ public class C206_CaseStudy {
 	}
 	
 	//================================= Option 3 Remove (CRUD - Delete)=================================
-	public static boolean removeUser(ArrayList<User> userList) {
+	public static boolean removeUser(ArrayList<User3> userList) {
 
 		String removeUserId = Helper.readString("Enter user ID to remove > ");
 
