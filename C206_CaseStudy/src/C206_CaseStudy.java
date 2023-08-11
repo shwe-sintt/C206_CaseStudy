@@ -1,5 +1,9 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import test.Activities;
+import test.Helper;
 
 public class C206_CaseStudy {
 	
@@ -10,8 +14,11 @@ public class C206_CaseStudy {
 		ArrayList<User> userList = new ArrayList<User>();
 		
 	    userList.add(new User("admin", "admin", "admin", "Admin", "Admin","",""));
-	    userList.add(new User("teacher", "teacher", "teacher1", "Teacher", "Teacher","",""));
+	    userList.add(new User("T123", "Lin Cin", "lincin", "lincin", "Teacher","",""));
 	    userList.add(new User("student", "student", "student1", "Student", "Student","floorball",""));
+		
+	    userList.add(new User("22123456", "Amelia Row", "Amelia", " ", "Student", "Hockey", ""));
+	    userList.add(new User("22654321", "Rachelle Lim", "Rachelle", " ", "Student", "Floorball", ""));
    
 //	    ArrayList<Activities> activityList = new ArrayList<Activities>();
 //
@@ -66,7 +73,7 @@ public class C206_CaseStudy {
         for (User user : userList) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password) && user.getRole().equalsIgnoreCase("admin")) {
                 System.out.println("\nWelcome, Admin!\n");
-                adminMenu();
+                adminMenu(userList);
                 return;
             }
         }
@@ -120,7 +127,7 @@ public class C206_CaseStudy {
         
     }
     
-    public static void adminMenu() {
+    public static void adminMenu(ArrayList<User> userList) {
 		Scanner scanner = new Scanner(System.in); 
 
 		int choice = 0;
@@ -136,7 +143,7 @@ public class C206_CaseStudy {
 
 			switch (choice) {
 			case 1:
-				manageUserAccounts();
+				manageUserAccounts(userList);
 				break;
 			case 2:
 				//
@@ -154,20 +161,17 @@ public class C206_CaseStudy {
 		}
 	}
     
-    public static void manageUserAccounts() {
+    public static void manageUserAccounts(ArrayList<User> userList) {
         Scanner scanner = new Scanner(System.in); 
 
-		ArrayList<User> userList = new ArrayList<User>();
-		
-	    userList.add(new User("22123456", "Amelia Row", "Amelia", " ", "Student", "Hockey", ""));
-	    userList.add(new User("22654321", "Rachelle Lim", "Rachelle", " ", "Student", "Floorball", ""));
+
 	    
         int choice = 0;
         while (choice != 5) {
             System.out.println("\n** Manage User Accounts **\n");
-            System.out.println("1. View all students");
-            System.out.println("2. Add a new student");
-            System.out.println("3. Delete a student");
+            System.out.println("1. View all user");
+            System.out.println("2. Add a new user");
+            System.out.println("3. Delete a user");
             System.out.println("4. Back");
 
             System.out.print("Enter your choice: ");
@@ -182,7 +186,7 @@ public class C206_CaseStudy {
 //                	addUserAccount(userList);
                 	User stu = inputUser();
 					C206_CaseStudy.addUser(userList, stu);
-					System.out.println("Student added successfully!");
+					System.out.println("User added successfully!");
                     break;
                 case 3:
                 	removeUser(userList);
@@ -219,8 +223,9 @@ public class C206_CaseStudy {
                     manageRegistrationMenu();
                     break;
                 case 3:
-                    manageApprovalStatusMenu();
-                    break;
+                	StatusManager statusManager = new StatusManager(); // Create an instance of StatusManager
+	                manageApprovalStatusMenu(statusManager);
+	                break;
                 case 4:
                 	ManageAttendance.manageAttendanceMenu(userList);
                     break;
@@ -304,37 +309,105 @@ public class C206_CaseStudy {
         }
     }
 
-    private static void manageApprovalStatusMenu() {
-        Scanner scanner = new Scanner(System.in);
+	private static void manageApprovalStatusMenu(StatusManager statusManager) {
+	    Scanner scanner = new Scanner(System.in);
 
-        int choice = 0;
-        while (choice != 4) {
-            System.out.println("** Manage Approval Status **\n");
-            System.out.println("1. Add Approval Status");
-            System.out.println("2. Delete Approval Status");
-            System.out.println("3. View Approval Status");
-            System.out.println("4. Back");
+	    int choice = 0;
+	    while (choice != 4) {
+	        System.out.println("** Manage Approval Status **\n");
+	        System.out.println("1. Add Approval Status");
+	        System.out.println("2. Delete Approval Status");
+	        System.out.println("3. View Approval Status");
+	        System.out.println("4. Back");
 
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
+	        System.out.print("Enter your choice: ");
+	        choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1:
-                    //addStatus
-                case 2:
-                    //deleteStatus
-                    break;
-                case 3:
-                    //viewAllStatus
-                    break;
-                case 4:
-                    System.out.println("Going back to the main menu...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
+	        switch (choice) {
+	            case 1:
+	                addApprovalStatus(statusManager);
+	                break;
+	            case 2:
+	                deleteApprovalStatus(statusManager);
+	                break;
+	            case 3:
+	                viewApprovalStatuses(statusManager);
+	                break;
+	            case 4:
+	                System.out.println("Going back to the main menu...");
+	                break;
+	            default:
+	                System.out.println("Invalid choice. Please try again.");
+	        }
+	    }
+	}
+
+	private static void viewApprovalStatuses(StatusManager statusManager) {
+	    List<ApprovalStatus> allStatuses = statusManager.getApprovalStatuses();
+	    if (allStatuses.isEmpty()) {
+	        System.out.println("No records to display.");
+	    } else {
+	        System.out.println("Approval Statuses:");
+	        for (ApprovalStatus status : allStatuses) {
+	            System.out.println("Name: " + status.getName() + ", Description: " + status.getDescription());
+	        }
+	    }
+	}
+
+	private static void deleteApprovalStatus(StatusManager statusManager) {
+	    Scanner scanner = new Scanner(System.in);
+
+	    System.out.print("Enter the name of the approval status to delete: ");
+	    String statusToDelete = scanner.next();
+
+	    ApprovalStatus status = findApprovalStatusByName(statusToDelete, statusManager);
+	    if (status != null) {
+	        System.out.print("Are you sure you want to delete '" + status.getName() + "'? (yes/no): ");
+	        String confirmation = scanner.next();
+
+	        if (confirmation.equalsIgnoreCase("yes")) {
+	            statusManager.deleteApprovalStatus(statusToDelete);
+	            System.out.println("Approval status deleted successfully.");
+	        } else {
+	            System.out.println("Deletion cancelled.");
+	        }
+	    } else {
+	        System.out.println("Approval status not found.");
+	    }
+	}
+
+
+	public static ApprovalStatus findApprovalStatusByName(String statusToDelete, StatusManager statusManager) {
+	    List<ApprovalStatus> allStatuses = statusManager.getApprovalStatuses();
+	    for (ApprovalStatus status : allStatuses) {
+	        if (status.getName().equalsIgnoreCase(statusToDelete)) {
+	            return status;
+	        }
+	    }
+	    return null;
+	}
+
+
+	private static void addApprovalStatus(StatusManager statusManager) {
+	    Scanner scanner = new Scanner(System.in);
+
+	    System.out.print("Enter unique name for the new approval status: ");
+	    String newStatusName = scanner.next();
+
+	    System.out.print("Enter description for the new approval status: ");
+	    String newStatusDescription = scanner.next();
+
+	    if (!newStatusName.isEmpty() && !newStatusDescription.isEmpty()) {
+	        if (statusManager.isApprovalStatusNameUnique(newStatusName)) {
+	            statusManager.addApprovalStatus(newStatusName, newStatusDescription);
+	            System.out.println("Approval status added successfully.");
+	        } else {
+	            System.out.println("An approval status with the same name already exists.");
+	        }
+	    } else {
+	        System.out.println("Name and description cannot be empty.");
+	    }
+	}
 
  
 	private static void studentMenu() {
@@ -381,33 +454,32 @@ public class C206_CaseStudy {
 	}
 	
 	public static void viewAllUser(ArrayList<User> userList) {
-		String output = String.format("%-20s %-20s %-20s %-20s\n\n", "Student Name", "Student ID",
-				"Chosen Activity", "Attendance Status");
+		String output = String.format("%-20s %-20s %-20s %-20s %-20s\n\n", "User Name", "User ID",
+				"Chosen Activity", "Attendance Status", "Role");
 		 output += retrieveAllUser(userList);	
 		System.out.println(output);
 	}
 	
 	//================================= Option 2 Add (CRUD - Create)=================================
 	public static User inputUser() {
-		String newUserName = Helper.readString("Enter student name > ");
-		String newUserId = Helper.readString("Enter student ID > ");
-		String newUserChosenAct = Helper.readString("Enter chosen activity > ");
+		String newUserName = Helper.readString("Enter user name > ");
+		String newUserId = Helper.readString("Enter user ID > ");
+		String newUserChosenAct = Helper.readString("Enter chosen activity (for students) > ");
+		String newUserRole = Helper.readString("Enter user role > ");
 		String newUseruName = "";
 		String newUserPass = "";
-		String newUserRole = "Student";
-		String newAttendanceStatus = "";
 
 
-		User stu = new User(newUserId, newUserName, newUseruName, newUserPass, newUserRole, newUserChosenAct, newAttendanceStatus);
+		User stu = new User(newUserId, newUserName, newUseruName, newUserPass, newUserRole, newUserChosenAct);
 		return stu;
 		
 	}
 	
 	public static void addUser(ArrayList<User> userList, User stu) {
-		User student;
+		User user;
 		for(int i = 0; i < userList.size(); i++) {
-			student = userList.get(i);
-			if (student.getName().equalsIgnoreCase(stu.getName()) )
+			user = userList.get(i);
+			if (user.getName().equalsIgnoreCase(stu.getName()) )
 				return;
 		}
 		if ((stu.getName().isEmpty()) || (stu.getId().isEmpty()) || (stu.getActivityChosen().isEmpty())) {
@@ -420,68 +492,78 @@ public class C206_CaseStudy {
 	//================================= Option 3 Remove (CRUD - Delete)=================================
 	public static boolean removeUser(ArrayList<User> userList) {
 
-		String removeStuID = Helper.readString("Enter student ID to remove > ");
+		String removeUserId = Helper.readString("Enter user ID to remove > ");
 
-		boolean studentFound = false;
+		boolean userFound = false;
 		for (int i = 0; i < userList.size(); i++) {
 
-			if (userList.get(i).getId().equals(removeStuID)) {
+			if (userList.get(i).getId().equals(removeUserId)) {
 
 				userList.remove(i);
-				studentFound = true;
+				userFound = true;
 				break;
 			}
 		}
 
-		if (studentFound) {
-			System.out.println("Student removed successfully!");
+		if (userFound) {
+			System.out.println("User removed successfully!");
 		} else {
-			System.out.println("Student not found!");
+			System.out.println("User not found!");
 		}
 
-		return studentFound;
+		return userFound;
 	}
-	
-
 	
 	//========================================================================================== Teacher ============================================================================
 	//================================= Option 1 View (CRUD - Read) =================================
-	public static void viewAllActivities(ArrayList<Activities> activityList) {
-		
-		String output = String.format("%-20s %-20s %-20s %-20s\n", "Activity ID", "Activity Name", "Description",
-				"Prerequisites & Restrictions");
+	public static String retrieveAllActivities(ArrayList<Activities> activityList) {
+	      String output = "";
+	      for (int i = 0; i < activityList.size(); i++) {
 
-		for (int i = 0; i < activityList.size(); i++) {
+	        if (activityList.get(i) != null) {
 
-			if (activityList.get(i) != null) {
+	          String activityId = activityList.get(i).getActivityId();
+	          String activityName = activityList.get(i).getActivityName();
+	          String activityDesc = activityList.get(i).getActivityDescription();
+	          String activityCrit = activityList.get(i).getActivityCriteria();
 
-				String activityID = activityList.get(i).getActivityId();
-				String activityName = activityList.get(i).getActivityName();
-				String activityDesc = activityList.get(i).getActivityDescription();
-				String activityCrit = activityList.get(i).getActivityCriteria();
+	          output += String.format("\n%-20s %-20s %-20s %-20s", activityId, activityName, activityDesc, activityCrit);
 
-				output += String.format("\n%-20s %-20s %-20s %-20s", activityID, activityName, activityDesc, activityCrit);
-
-			}
-		}
-		System.out.println(output);
-		// ------------------- END OF CODE
-
-	}
+	        }
+	      }return output;  
+	    }
+	    public static void viewAllActivities(ArrayList<Activities> activityList) {
+	      
+	      String output = String.format("%-20s %-20s %-20s %-20s\n", "Activity ID", "Activity Name",
+	          "Description", "Prerequisites & Restrictions");
+	      output+=retrieveAllActivities(activityList);
+	      System.out.println(output);
+	    }
 	
 	//================================= Option 2 Add (CRUD - Create)=================================
-	public static void addActivity(ArrayList<Activities> activityList) {
-
+	public static Activities inputActivity() {
 		String newActId = Helper.readString("Enter activity id (AA----) > ");
 		String newActName = Helper.readString("Enter activity name > ");
 		String newDesc = Helper.readString("Enter description > ");
 		String newCrit = Helper.readString("Enter prerequisites & restrictions > ");
-//		String stuId = "";
+		
+		Activities a = new Activities(newActId, newActName, newDesc, newCrit);
+		return a;
+	}
+	
+	public static void addActivity(ArrayList<Activities> activityList, Activities a) {
 
-		Activities newActivity = new Activities(newActId, newActName, newDesc, newCrit);
-		activityList.add(newActivity);
-
-		System.out.println("Activity added successfully!");
+		Activities activity;
+		for (int i = 0; i < activityList.size(); i++) {
+			activity = activityList.get(i);
+			if (activity.getActivityId().equalsIgnoreCase(a.getActivityId())) {
+				return;
+			}
+		}
+		if ((a.getActivityId().isEmpty()) || (a.getActivityName().isEmpty()) || (a.getActivityDescription().isEmpty()) || (a.getActivityCriteria().isEmpty())) {
+			return;
+		}
+		activityList.add(a);
 	}
 	
 	//================================= Option 3 Remove (CRUD - Delete)=================================
@@ -505,6 +587,28 @@ public class C206_CaseStudy {
 		} else {
 			System.out.println("Activity not found!");
 		}
+		return activityFound;
+	}
+	
+	
+	public static boolean doRemoveActivity(ArrayList<Activities> activityList,String removeActId) {
+		boolean activityFound = false;
+		for (int i = 0; i < activityList.size(); i++) {
+
+			if (activityList.get(i).getActivityId().equals(removeActId)) {
+
+				activityList.remove(i);
+				activityFound = true;
+				break;
+			}
+		}
+
+		if (activityFound) {
+			System.out.println("Student removed successfully!");
+		} else {
+			System.out.println("Student not found!");
+		}
+
 		return activityFound;
 	}
 	
