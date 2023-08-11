@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import test.Activities;
-import test.Helper;
 
 public class C206_CaseStudy {
 	
@@ -259,7 +257,8 @@ public class C206_CaseStudy {
             
             switch (choice) {
                 case 1:
-                	C206_CaseStudy.addActivity(activityList);
+                	Activities a = inputActivity();
+                	addActivity(activityList, a);
                     break;
                 case 2:
                 	C206_CaseStudy.removeActivity(activityList);
