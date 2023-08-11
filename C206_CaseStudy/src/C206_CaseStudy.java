@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import test.Activities;
+import test.Helper;
+
 public class C206_CaseStudy {
 	
 	
@@ -513,42 +516,54 @@ public class C206_CaseStudy {
 	
 	//========================================================================================== Teacher ============================================================================
 	//================================= Option 1 View (CRUD - Read) =================================
-	public static void viewAllActivities(ArrayList<Activities> activityList) {
-		
-		String output = String.format("%-20s %-20s %-20s %-20s\n", "Activity ID", "Activity Name", "Description",
-				"Prerequisites & Restrictions");
+	public static String retrieveAllActivities(ArrayList<Activities> activityList) {
+	      String output = "";
+	      for (int i = 0; i < activityList.size(); i++) {
 
-		for (int i = 0; i < activityList.size(); i++) {
+	        if (activityList.get(i) != null) {
 
-			if (activityList.get(i) != null) {
+	          String activityId = activityList.get(i).getActivityId();
+	          String activityName = activityList.get(i).getActivityName();
+	          String activityDesc = activityList.get(i).getActivityDescription();
+	          String activityCrit = activityList.get(i).getActivityCriteria();
 
-				String activityID = activityList.get(i).getActivityId();
-				String activityName = activityList.get(i).getActivityName();
-				String activityDesc = activityList.get(i).getActivityDescription();
-				String activityCrit = activityList.get(i).getActivityCriteria();
+	          output += String.format("\n%-20s %-20s %-20s %-20s", activityId, activityName, activityDesc, activityCrit);
 
-				output += String.format("\n%-20s %-20s %-20s %-20s", activityID, activityName, activityDesc, activityCrit);
-
-			}
-		}
-		System.out.println(output);
-		// ------------------- END OF CODE
-
-	}
+	        }
+	      }return output;  
+	    }
+	    public static void viewAllActivities(ArrayList<Activities> activityList) {
+	      
+	      String output = String.format("%-20s %-20s %-20s %-20s\n", "Activity ID", "Activity Name",
+	          "Description", "Prerequisites & Restrictions");
+	      output+=retrieveAllActivities(activityList);
+	      System.out.println(output);
+	    }
 	
 	//================================= Option 2 Add (CRUD - Create)=================================
-	public static void addActivity(ArrayList<Activities> activityList) {
-
+	public static Activities inputActivity() {
 		String newActId = Helper.readString("Enter activity id (AA----) > ");
 		String newActName = Helper.readString("Enter activity name > ");
 		String newDesc = Helper.readString("Enter description > ");
 		String newCrit = Helper.readString("Enter prerequisites & restrictions > ");
-//		String stuId = "";
+		
+		Activities a = new Activities(newActId, newActName, newDesc, newCrit);
+		return a;
+	}
+	
+	public static void addActivity(ArrayList<Activities> activityList, Activities a) {
 
-		Activities newActivity = new Activities(newActId, newActName, newDesc, newCrit);
-		activityList.add(newActivity);
-
-		System.out.println("Activity added successfully!");
+		Activities activity;
+		for (int i = 0; i < activityList.size(); i++) {
+			activity = activityList.get(i);
+			if (activity.getActivityId().equalsIgnoreCase(a.getActivityId())) {
+				return;
+			}
+		}
+		if ((a.getActivityId().isEmpty()) || (a.getActivityName().isEmpty()) || (a.getActivityDescription().isEmpty()) || (a.getActivityCriteria().isEmpty())) {
+			return;
+		}
+		activityList.add(a);
 	}
 	
 	//================================= Option 3 Remove (CRUD - Delete)=================================
@@ -572,6 +587,28 @@ public class C206_CaseStudy {
 		} else {
 			System.out.println("Activity not found!");
 		}
+		return activityFound;
+	}
+	
+	
+	public static boolean doRemoveActivity(ArrayList<Activities> activityList,String removeActId) {
+		boolean activityFound = false;
+		for (int i = 0; i < activityList.size(); i++) {
+
+			if (activityList.get(i).getActivityId().equals(removeActId)) {
+
+				activityList.remove(i);
+				activityFound = true;
+				break;
+			}
+		}
+
+		if (activityFound) {
+			System.out.println("Student removed successfully!");
+		} else {
+			System.out.println("Student not found!");
+		}
+
 		return activityFound;
 	}
 	
