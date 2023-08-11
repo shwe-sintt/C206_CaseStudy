@@ -7,7 +7,7 @@ public class ManageAttendance {
     private static final int OPTION_DELETE = 3;
     private static final int OPTION_BACK = 4;
 
-    public static void manageAttendanceMenu(ArrayList<User3> userList) {
+    public static void manageAttendanceMenu(ArrayList<User> userList) {
         int choice = 0;
         while (choice != OPTION_BACK) {
             System.out.println("\n** Manage Attendance **\n");
@@ -37,11 +37,11 @@ public class ManageAttendance {
         }
     }
 
-    public static void viewAttendance(ArrayList<User3> userList) {
+    public static void viewAttendance(ArrayList<User> userList) {
         String activityCode = Helper.readString("Enter activity code: ");
 
         boolean validActivity = false;
-        for (User3 user : userList) {
+        for (User user : userList) {
             if ("student".equalsIgnoreCase(user.getRole()) && activityCode.equals(user.getActivityChosen())) {
                 validActivity = true;
                 break;
@@ -55,7 +55,7 @@ public class ManageAttendance {
 
         boolean foundAttendance = false;
 
-        for (User3 user : userList) {
+        for (User user : userList) {
             if ("student".equalsIgnoreCase(user.getRole()) && activityCode.equals(user.getActivityChosen()) && !user.getAttendanceStatus().isEmpty()) {
                 System.out.println("\n** View Attendance **");
                 System.out.println("Attendance Records:");
@@ -73,11 +73,11 @@ public class ManageAttendance {
         }
     }
 
-    public static void addAttendance(ArrayList<User3> userList) {
+    public static void addAttendance(ArrayList<User> userList) {
         String activityCode = Helper.readString("Enter activity code: ");
 
         boolean validActivity = false;
-        for (User3 user : userList) {
+        for (User user : userList) {
             if ("student".equalsIgnoreCase(user.getRole()) && user.getActivityChosen().equals(activityCode)) {
                 validActivity = true;
                 break;
@@ -92,7 +92,7 @@ public class ManageAttendance {
         String name = Helper.readString("Enter student name: ");
 
         boolean validStudent = false;
-        for (User3 user : userList) {
+        for (User user : userList) {
             if ("student".equalsIgnoreCase(user.getRole()) && user.getActivityChosen().equals(activityCode) && user.getName().equalsIgnoreCase(name)) {
                 validStudent = true;
                 break;
@@ -104,7 +104,7 @@ public class ManageAttendance {
             return;
         }
 
-        for (User3 user : userList) {
+        for (User user : userList) {
             if ("student".equalsIgnoreCase(user.getRole()) && user.getActivityChosen().equals(activityCode) && user.getName().equalsIgnoreCase(name)) {
                 String attendanceStatus = Helper.readString("Enter attendance status (Present/Absent): ");
 
@@ -119,11 +119,11 @@ public class ManageAttendance {
         }
     }
 
-    public static void deleteAttendance(ArrayList<User3> userList) {
+    public static void deleteAttendance(ArrayList<User> userList) {
         String activityCode = Helper.readString("Enter activity code: ");
 
         boolean validActivity = false;
-        for (User3 user : userList) {
+        for (User user : userList) {
             if ("student".equalsIgnoreCase(user.getRole()) && user.getActivityChosen().equals(activityCode)) {
                 validActivity = true;
                 break;
@@ -138,7 +138,7 @@ public class ManageAttendance {
         String name = Helper.readString("Enter student name to delete attendance: ");
 
         boolean validStudent = false;
-        for (User3 user : userList) {
+        for (User user : userList) {
             if ("student".equalsIgnoreCase(user.getRole()) && user.getActivityChosen().equals(activityCode) && user.getName().equalsIgnoreCase(name)) {
                 validStudent = true;
                 break;
@@ -150,7 +150,7 @@ public class ManageAttendance {
             return;
         }
 
-        for (User3 user : userList) {
+        for (User user : userList) {
             if ("student".equalsIgnoreCase(user.getRole()) && user.getActivityChosen().equals(activityCode) && user.getName().equalsIgnoreCase(name)) {
                 if (!user.getAttendanceStatus().isEmpty()) {
                     user.setAttendanceStatus("");
