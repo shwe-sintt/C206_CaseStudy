@@ -42,7 +42,7 @@ public class approvalTest {
 
         statusManager.deleteApprovalStatus("Pending");
         assertEquals(1, statusManager.getApprovalStatuses().size());
-        assertNull(C206_CaseStudy3.findApprovalStatusByName("Pending", statusManager));
+        assertNull(C206_CaseStudy.findApprovalStatusByName("Pending", statusManager));
     }
 
 
