@@ -23,10 +23,10 @@ public class ManageAttendance {
                     viewAttendance(userList);
                     break;
                 case OPTION_ADD:
-                    addAttendance(userList);
+                    addAttendance(userList, null);
                     break;
                 case OPTION_DELETE:
-                    deleteAttendance(userList);
+                    deleteAttendance(userList, null);
                     break;
                 case OPTION_BACK:
                     System.out.println("Going back to the main menu...\n");
@@ -73,7 +73,7 @@ public class ManageAttendance {
         }
     }
 
-    public static void addAttendance(ArrayList<User> userList) {
+    public static void addAttendance(ArrayList<User> userList, User student1) {
         String activityCode = Helper.readString("Enter activity code: ");
 
         boolean validActivity = false;
@@ -119,7 +119,7 @@ public class ManageAttendance {
         }
     }
 
-    public static void deleteAttendance(ArrayList<User> userList) {
+    public static void deleteAttendance(ArrayList<User> userList, String name1) {
         String activityCode = Helper.readString("Enter activity code: ");
 
         boolean validActivity = false;

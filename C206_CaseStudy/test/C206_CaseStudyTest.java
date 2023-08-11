@@ -8,7 +8,11 @@ import org.junit.Test;
 
 public class C206_CaseStudyTest {
 
-	
+	private Activities a1;
+	private Activities a2;
+	private Activities a3;
+
+	private ArrayList<Activities> activityList;
 
 	@Test
 	public void c206_test() {
@@ -22,12 +26,24 @@ public class C206_CaseStudyTest {
     @Before
     public void setUp() {
         statusManager = new StatusManager();
+<<<<<<< HEAD
         myTimeSlot = new myTimeSlot();
+=======
+        a1 = new Activities("AA0011", "Basketball", "Ball", "Basket");
+		a2 = new Activities("AA0022", "Football", "Ball", "Foot");
+		a3 = new Activities("AA0033", "Baseball", "Ball", "Base");
+
+		activityList= new ArrayList<Activities>();
+>>>>>>> branch 'master' of https://github.com/shwe-sintt/C206_CaseStudy.git
     }
 
     @After
     public void tearDown() {
         statusManager = null;
+        a1 = null;
+		a2 = null;
+		a3 = null;
+		activityList = null;
     }
 
     @Test
@@ -66,6 +82,7 @@ public class C206_CaseStudyTest {
         assertTrue(statusManager.isApprovalStatusNameUnique("Rejected"));
         assertFalse(statusManager.isApprovalStatusNameUnique("Approved"));
     }
+<<<<<<< HEAD
         
     @Test
     public void testAddTimeSlot() {
@@ -103,5 +120,83 @@ public class C206_CaseStudyTest {
         updated = myTimeSlot.updateTimeSlot(timeSlotList);
         assertFalse(updated);
     }
+=======
+    
+	@Test
+	public void testAddActivity() {
+		// Item list is not null and it is empty
+		assertNotNull("Test if there is valid Activities arraylist to add to", activityList);
+		assertEquals("Test that the Activities arraylist is empty.", 0, activityList.size());
+		//Given an empty list, after adding 1 item, the size of the list is 1
+		C206_CaseStudy.addActivity(activityList, a1);		
+		assertEquals("Test that the Camcorder arraylist size is 1.", 1, activityList.size());
+
+		
+		// Add an item
+		C206_CaseStudy.addActivity(activityList, a2);
+		assertEquals("Test that the Activities arraylist size is now 2.", 2, activityList.size());
+		//The item just added is as same as the last item in the list
+		assertSame("Test that Activities is added to the end of the list.", a2, activityList.get(1));
+
+		// Add an item that already exists in the list
+		C206_CaseStudy.addActivity(activityList, a2);
+		assertEquals("Test that the Activities arraylist size is unchange.", 2, activityList.size());
+
+		// Add an item that has missing detail
+		Activities a_missing = new Activities("AA0044", "", "Ball", "Ball");
+		C206_CaseStudy.addActivity(activityList, a_missing);
+		assertEquals("Test that the Activities arraylist size is unchange.", 2, activityList.size());
+	}
+	
+	@Test
+	public void testDeleteActivity() {
+		// Given an empty list, after adding 2 items, test if the size of the list is 2.
+		// After removing an item , then the size of the list become 1
+			C206_CaseStudy.addActivity(activityList, a1);
+			C206_CaseStudy.addActivity(activityList, a2);
+			assertEquals("Test if that Activities arraylist size is 1?", 2, activityList.size());
+			
+			// The item just added is as same as the first item of the list
+		    assertSame("Test that Activities added same as the 1st Activities of the list?", a1, activityList.get(0));
+
+		    
+		    // Test if Activities list is not null but empty, so that can add new item
+		    assertNotNull("test if there is valid Activities arraylist to delete to", activityList);
+		    
+		 // Delete, test the size of the list is 1
+		    C206_CaseStudy.doRemoveActivity(activityList, a1.getActivityId());
+		    assertEquals("Test that Activities arrayList is 0?", 1, activityList.size());
+		    assertSame("Test that activityList is added same as 3rd item of the list?", a2 ,activityList.get(0));
+		
+	}
+	
+	@Test
+	public void testRetrieveActivity() {
+		// Test if Item list is not null but empty, so that can add a new item
+		assertNotNull("Test if there is valid Activities arraylist to add to", activityList);
+		// test if the list of Activities retrieved is empty
+		String allActivities = C206_CaseStudy.retrieveAllActivities(activityList);
+		String testOutput = "";
+		assertEquals("Test that the title row is correct", testOutput, allActivities.substring(0, testOutput.length()));
+
+		// Given an empty list, after adding 2 items, test if the size of the list is 2
+		C206_CaseStudy.addActivity(activityList, a1);
+		C206_CaseStudy.addActivity(activityList, a2);
+		assertEquals("Test if that Activities arraylist size is 2?", 2, activityList.size());
+
+		// test if the expected output string same as the list of Activities retrieved
+		allActivities = C206_CaseStudy.retrieveAllActivities(activityList);
+
+		testOutput = String.format("%-20s %-20s %-20s %-20s\n", "AA0011", "Basketball", "Ball", "Basket");
+		testOutput += String.format("%-20s %-20s %-20s %-20s\n", "AA0022", "Football", "Ball", "Foot");
+
+		assertEquals("Check that viewAllActivities list", testOutput.trim(), allActivities.trim());
+
+	}
+>>>>>>> branch 'master' of https://github.com/shwe-sintt/C206_CaseStudy.git
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/shwe-sintt/C206_CaseStudy.git
